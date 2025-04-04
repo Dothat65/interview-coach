@@ -59,10 +59,7 @@ export default function AuthPage() {
     <div className={styles.container}>
       <div className={styles.box}>
         <div className={styles.logo}>🚀 Interview Coach</div>
-        <button className={styles.googleButton} onClick={handleGoogleSignIn}>
-          Continue with Google
-        </button>
-        <div className={styles.separator}>or</div>
+        <div className={styles.separator}></div>
         <input
           type="email"
           placeholder="Enter your email"
@@ -103,7 +100,12 @@ export default function AuthPage() {
             </p>
           )}
         </div>
+        <button className={styles.googleButton} onClick={handleGoogleSignIn}>
+          Continue with Google
+        </button>
+
       </div>
+      
     </div>
   );
 }

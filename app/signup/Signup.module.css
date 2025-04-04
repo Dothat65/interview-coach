@@ -76,3 +76,27 @@
 .link:hover {
   color: #005bb5;
 }
+
+.input {
+  width: 100%;
+  padding: 12px 16px; /* Add padding for better spacing */
+  margin: 10px 0; /* Add spacing between input fields */
+  border: 1px solid #ccc; /* Add a light border */
+  border-radius: 6px; /* Round the corners */
+  font-size: 16px; /* Set a readable font size */
+  color: #333; /* Text color */
+  background-color: #f9f9f9; /* Light background color */
+  outline: none; /* Remove default outline */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.input:focus {
+  border-color: #0070f3; /* Change border color on focus */
+  box-shadow: 0 0 4px rgba(0, 112, 243, 0.5); /* Add a subtle shadow */
+  background-color: #fff; /* Brighten the background on focus */
+}
+
+.input::placeholder {
+  color: #aaa; /* Style the placeholder text */
+  font-style: italic; /* Optional: make placeholder text italic */
+}
