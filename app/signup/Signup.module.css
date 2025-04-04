@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  background-color: #f7f9fc;
+}
+
+.box {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.googleButton {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.googleButton:hover {
+  background-color: #357ae8;
+}
+
+.separator {
+  margin: 20px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.authButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.loginButton:hover {
+  background-color: #218838;
+}
+
+.toggle {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+
+.link {
+  color: #0070f3;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #005bb5;
+}
