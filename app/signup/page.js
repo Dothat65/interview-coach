@@ -19,7 +19,7 @@ export default function AuthPage() {
     if (!email || !password) {
       alert("Please enter both email and password.");
       return;
-    }
+    } 
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -31,7 +31,7 @@ export default function AuthPage() {
       alert("Sign-Up Failed: " + error.message);
     } else {
       console.log("Sign-up successful! Data:", data);
-      alert("Sign-Up Successful! Please check your email for confirmation.");
+      alert("Sign-Up Successful!");
     }
   };
 
@@ -54,6 +54,13 @@ export default function AuthPage() {
       alert("Login Successful!");
     }
   };
+
+  const toggleAuthMode = () => {
+    // Toggle between login and signup mode
+    setIsLogin(!isLogin);
+    setEmail(""); // Clear email input when toggling
+    setPassword(""); // Clear password input when toggling
+  }
 
   return (
     <div className={styles.container}>
@@ -87,21 +94,21 @@ export default function AuthPage() {
           {isLogin ? (
             <p>
               Don't have an account?{" "}
-              <span onClick={() => setIsLogin(false)} className={styles.link}>
+              <span onClick = {toggleAuthMode} className={styles.link}>
                 Sign Up
               </span>
             </p>
           ) : (
             <p>
               Already have an account?{" "}
-              <span onClick={() => setIsLogin(true)} className={styles.link}>
+              <span onClick={toggleAuthMode} className={styles.link}>
                 Log In
               </span>
             </p>
           )}
         </div>
         <button className={styles.googleButton} onClick={handleGoogleSignIn}>
-          Continue with Google
+          Continue with Google 
         </button>
 
       </div>
