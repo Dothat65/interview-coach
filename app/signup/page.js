@@ -1,13 +1,15 @@
 "use client";
-import { useState } from "react";
+import { use, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import styles from "./Signup.module.css";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false); // State to toggle between login and signup
 
+  const router = useRouter();
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -52,6 +54,8 @@ export default function AuthPage() {
     } else {
       console.log("Login Successful! Data:", data);
       alert("Login Successful!");
+      // Redirect to home page after successful login
+      router.push("/"); // Change this to the route you want to redirect to after login
     }
   };
 
