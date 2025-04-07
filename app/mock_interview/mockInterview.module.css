@@ -1,16 +1,15 @@
-.container {
+.mockInterview-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 24px;
-    background: linear-gradient(to right, #eef2f7, #f8f9fb);
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #dceefb, #f5f7fa);
 }
 
-.input {
+.mockInterview-textarea {
     min-height: 25vh;
     width: 80%;
     padding: 14px 18px;
@@ -24,19 +23,20 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input:focus {
+.mockInterview-textarea:focus {
     border-color: #3b82f6;
     box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
     background-color: #fff;
 }
 
-.input::placeholder {
+.mockInterview-textarea::placeholder {
     color: #94a3b8;
     font-style: italic;
 }
 
-.submitButton {
-    width: 10%;
+.mockInterview-submitButton {
+    text-align: center;
+    width: clamp(100px, 20%, 160px);
     padding: 14px 18px;
     background-color: #10b981;
     color: white;
@@ -49,12 +49,16 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.submitButton:hover {
+.mockInterview-submitButton:hover {
     background-color: #0f9f75;
     box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
-.questionHeader {
+.mockInterview-submitButton:disabled {
+    background-color: #63dbb3;
+}
+
+.mockInterview-question {
     text-align: center;
     font-size: 2rem;
     font-weight: 700;
@@ -62,11 +66,39 @@
     margin-bottom: 28px;
 }
 
-.prompt {
+.mockInterview-prompt {
     text-align: center;
     width: 80%;
     font-size: 1.5rem;
     font-weight: 300;
     color: #1e293b;
     margin-bottom: 28px;
+}
+
+.mockInterview-feedback {
+    margin-top: 32px;
+    width: 80%;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    color: #065f46;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    transition: all 0.3s ease;
+}
+
+.mockInterview-feedback h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #047857;
+    text-align: center;
+}
+
+.mockInterview-feedback p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #065f46;
+    text-align: center;
 }
