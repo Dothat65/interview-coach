@@ -10,9 +10,8 @@ export default function HomePage() {
         link="/mock-interviews"
       />
       <Card
-        title="Interview Tips"
-        description="Learn the best tips to ace your next interview."
-        link="/interview-tips"
+        title="Popular Interview Questions"
+        description="Explore a curated list of popular interview questions to prepare."
       />
       <Card
         title="Resources"
