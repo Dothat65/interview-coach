@@ -1,0 +1,13 @@
+.cardContainer {
+    display: flex; /* Use Flexbox for horizontal alignment */
+    gap: 16px; /* Add spacing between cards */
+    justify-content: center; /* Center the cards horizontally */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    padding: 20px; /* Add padding around the container */
+  }
+  
+  .card {
+    flex: 1 1 calc(33.333% - 16px); /* 3 cards per row */
+    max-width: 300px; /* Optional: Limit the card width */
+    box-sizing: border-box; /* Include padding and border in width */
+  }

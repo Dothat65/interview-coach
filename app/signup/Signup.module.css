@@ -1,0 +1,133 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(to right, #eef2f7, #f8f9fb);
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #dceefb, #f5f7fa);
+
+}
+
+.box {
+  background: #ffffff;
+  padding: 48px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 28px;
+}
+
+.googleButton {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.googleButton:hover {
+  background-color: #357ae8;
+  box-shadow: 0 4px 14px rgba(66, 133, 244, 0.3);
+}
+
+.separator {
+  margin: 26px 0 16px;
+  font-size: 14px;
+  color: #94a3b8;
+  position: relative;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: #e2e8f0;
+}
+
+.separator::before {
+  left: 0;
+}
+
+.separator::after {
+  right: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  margin: 12px 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #1e293b;
+  background-color: #f8fafc;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+  background-color: #fff;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.authButton {
+  width: 100%;
+  padding: 14px 18px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.authButton:hover {
+  background-color: #0f9f75;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.toggle {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.link {
+  color: #3b82f6;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
