@@ -1,3 +1,4 @@
+"use client";
 import styles from './Card.module.css'; // Import the CSS Module for styling
 
 export default function Card({ title, description, link }) {
