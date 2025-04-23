@@ -1,43 +1,39 @@
+.cardContainer {
+  display: flex; /* Use Flexbox for horizontal alignment */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  gap: 30px; /* Increase spacing between cards */
+  justify-content: center; /* Center the cards horizontally */
+  padding: 20px; /* Add padding around the container */
+}
+
 .card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 300px;
-    margin: 10px;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .cardContent {
-    padding: 20px;
-  }
-  
-  .cardTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .cardDescription {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .cardLink {
-    font-size: 1rem;
-    color: #0070f3;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .cardLink:hover {
-    text-decoration: underline;
-  }
-  
+  flex: 1 1 calc(33.333% - 30px); /* 3 cards per row, adjust width */
+  max-width: 400px; /* Increase max width for larger cards */
+  box-sizing: border-box; /* Include padding and border in width */
+  background: white; /* Card background color */
+  border: 1px solid #ddd; /* Add a border */
+  border-radius: 12px; /* Round the corners */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover effects */
+}
+
+.card:hover {
+  transform: translateY(-8px); /* Lift the card on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+.cardContent {
+  padding: 24px; /* Increase padding inside the card */
+  text-align: left; /* Align text to the left */
+}
+
+.cardTitle {
+  font-size: 1.8rem; /* Increase font size for the title */
+  margin-bottom: 12px; /* Add more space below the title */
+  color: #0070f3; /* Primary color for the title */
+}
+
+.cardDescription {
+  font-size: 1.2rem; /* Increase font size for the description */
+  color: #555; /* Subtle text color */
+}

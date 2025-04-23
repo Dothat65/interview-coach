@@ -1,13 +1,103 @@
 .cardContainer {
-    display: flex; /* Use Flexbox for horizontal alignment */
-    gap: 16px; /* Add spacing between cards */
-    justify-content: center; /* Center the cards horizontally */
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    padding: 20px; /* Add padding around the container */
+  display: flex; /* Use Flexbox for horizontal alignment */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  gap: 20px; /* Add spacing between cards */
+  justify-content: center; /* Center the cards horizontally */
+  padding: 20px; /* Add padding around the container */
+}
+
+.pageWrapper {
+  position: relative;
+}
+
+.profileIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s ease-in-out;
+}
+
+.profileIcon:hover {
+  transform: scale(1.1);
+}
+
+
+  .title {
+    font-size: 3rem; /* Increase font size for emphasis */
+    font-weight: bold; /* Make the title bold */
+    color: #0070f3; /* Use a primary color for the title */
+    text-align: center; /* Center the title text */
+    margin-bottom: 20px; /* Add space below the title */
+    text-transform: uppercase; /* Make the text uppercase */
+    letter-spacing: 2px; /* Add spacing between letters */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    animation: fadeIn 1.5s ease-in-out; /* Add a fade-in animation */
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 105vh;
+    background-image: url("/images/image4.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
   }
   
-  .card {
-    flex: 1 1 calc(33.333% - 16px); /* 3 cards per row */
-    max-width: 300px; /* Optional: Limit the card width */
-    box-sizing: border-box; /* Include padding and border in width */
+
+  .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+  }
+  
+  .footer {
+    background-color: #f1f1f1; /* Light gray background */
+    padding: 20px 0; /* Add vertical padding */
+    text-align: center; /* Center-align the content */
+    margin-top: 40px; /* Add space above the footer */
+    border-top: 1px solid #ddd; /* Add a subtle border at the top */
+  }
+  
+  .footerContent {
+    max-width: 1200px; /* Limit the width of the footer content */
+    margin: 0 auto; /* Center the content */
+    padding: 0 20px; /* Add horizontal padding */
+  }
+  
+  .footer p {
+    font-size: 0.9rem; /* Smaller font size for the text */
+    color: #555; /* Subtle text color */
+    margin-bottom: 10px; /* Add space below the text */
+  }
+  
+  .footerLinks {
+    display: flex; /* Use Flexbox for horizontal alignment */
+    justify-content: center; /* Center the links */
+    gap: 20px; /* Add spacing between links */
+  }
+  
+  .footerLinks a {
+    font-size: 0.9rem; /* Smaller font size for links */
+    color: #0070f3; /* Primary color for links */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .footerLinks a:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+
+  .cardLink {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit color from parent */
   }
