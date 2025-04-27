@@ -1,0 +1,55 @@
+.mockInterview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa;
+    color: #334155;
+}
+
+.mockInterview-dropdown {
+    width: clamp(200px, 60%, 400px);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f8fafc;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mockInterview-dropdown:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+    background-color: #fff;
+}
+
+.mockInterview-submitButton {
+    text-align: center;
+    width: clamp(120px, 20%, 160px);
+    padding: 14px 18px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mockInterview-submitButton:hover {
+    background-color: #0f9f75;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.mockInterview-submitButton:disabled {
+    background-color: #63dbb3;
+    cursor: not-allowed;
+}
