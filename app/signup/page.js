@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // State for user's full name
   const [isLogin, setIsLogin] = useState(false); // State to toggle between login and signup
 
   const router = useRouter();
@@ -64,6 +65,7 @@ export default function AuthPage() {
     setIsLogin(!isLogin);
     setEmail(""); // Clear email input when toggling
     setPassword(""); // Clear password input when toggling
+    setName(""); // Clear name input when toggling
   }
 
   return (
@@ -71,21 +73,35 @@ export default function AuthPage() {
       <div className={styles.box}>
         <div className={styles.logo}>🚀 Interview Coach</div>
         <div className={styles.separator}></div>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-        />
-        {isLogin ? (
+        
+        <div className={styles.inputGroup}>
+    {/* Conditionally render Name input inside the group */}
+    {!isLogin && (
+      <input
+        type="text"
+        placeholder="Enter your full name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className={styles.input}
+      />
+    )}
+
+    <input
+      type="email"
+      placeholder="Enter your email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className={styles.input}
+    />
+
+    <input
+      type="password"
+      placeholder="Enter your password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className={styles.input}
+    />
+  </div>        {isLogin ? (
           <button className={styles.authButton} onClick={handleLogIn}>
             Log In
           </button>
