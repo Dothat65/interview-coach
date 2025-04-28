@@ -19,24 +19,52 @@ export default function AuthPage() {
   };
 
   const handleEmailSignUp = async () => {
+    // Check if email and password are provided
     if (!email || !password) {
       alert("Please enter both email and password.");
       return;
     } 
-
+  
+    // Sign up the user with Supabase
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
-
+  
+    // Handle sign-up error
     if (error) {
       console.log("Email sign-up error:", error.message);
       alert("Sign-Up Failed: " + error.message);
-    } else {
-      console.log("Sign-up successful! Data:", data);
-      alert("Sign-Up Successful!");
+      return; // Stop execution if sign-up failed
+    } 
+  
+    console.log("Sign-up successful! Data:", data);
+    alert("Sign-Up Successful!");
+  
+    // 1. Extract user ID from the sign-up response
+    const userId = data.user.id;
+  
+    // 2. Insert a new row into the "user_profiles" table
+    const { error: profileErr } = await supabase
+      .from("user_profiles")  // Target the user_profiles table
+      .insert([               // Insert the user's profile
+        {
+          user_id: userId,    // Link to auth.users.id
+          full_name: name,    // Store the full name provided by the user
+        },
+      ]);
+  
+    // Handle error while inserting profile
+    if (profileErr) {
+      console.error("Error creating profile:", profileErr.message);
+      alert("Failed to create user profile.");
+      return;  // Stop execution if profile creation failed
     }
+  
+    // If everything is successful, proceed
+    console.log("Profile created successfully!");
   };
+  
 
   const handleLogIn = async () => {
     if (!email || !password) {
