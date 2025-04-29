@@ -14,8 +14,17 @@ export default function AuthPage() {
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        redirectTo: "http://localhost:3000/home", // Replace with your desired redirect URL
+      },
     });
-    if (error) console.error("Google Sign-In Error:", error.message);
+  
+    if (error) {
+      console.error("Google Sign-In Error:", error.message);
+      alert("Google Sign-In Failed: " + error.message);
+    } else {
+      console.log("Google Sign-In successful!");
+    }
   };
 
   const handleEmailSignUp = async () => {
@@ -63,6 +72,9 @@ export default function AuthPage() {
   
     // If everything is successful, proceed
     console.log("Profile created successfully!");
+
+    //re-direct to home page after successful sign-up
+    router.push("/home"); // Change this to the route you want to redirect to after sign-up
   };
   
 
@@ -84,7 +96,7 @@ export default function AuthPage() {
       console.log("Login Successful! Data:", data);
       alert("Login Successful!");
       // Redirect to home page after successful login
-      router.push("/"); // Change this to the route you want to redirect to after login
+      router.push("/home"); // Change this to the route you want to redirect to after login
     }
   };
 
