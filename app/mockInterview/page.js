@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "./mockInterview.module.css";
 
 export default function MockInterviewPage() {
@@ -15,6 +15,12 @@ export default function MockInterviewPage() {
   const [topic, setTopic] = useState("");
   const [history, setHistory] = useState([]);
   const [finished, setFinished] = useState(false);
+
+  // Speech recognition states
+  const [isListening, setIsListening] = useState(false)
+  const [speechSupported, setSpeechSupported] = useState(true)
+
+  const recognitionRef = useRef(null);
 
   const router = useRouter();
 
@@ -66,8 +72,49 @@ export default function MockInterviewPage() {
     setShowNext(false);
   };
 
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+
+    setIsListening(true);
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    recognitionRef.current = new SpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
+
+    recognitionRef.current.onresult = (event) => {
+      const current = event.resultIndex;
+      const result = event.results[current];
+      const text = result[0].transcript;
+
+      if (result.isFinal) {
+        setResponse((prevResponse) => prevResponse + text);
+      }
+    };
+
+    recognitionRef.current.onend = () => {
+      setIsListening(false);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error('Speech recognition error', event.error);
+      setIsListening(false);
+    };
+
+    recognitionRef.current.start();
+  };
+
   useEffect(() => {
     document.title = "Mock Interview";
+
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      setSpeechSupported(false);
+    }
 
     const storedTopic = sessionStorage.getItem("interviewTopic");
     const storedQuestions = sessionStorage.getItem("interviewQuestions");
@@ -112,6 +159,15 @@ export default function MockInterviewPage() {
             value={response}
             onChange={handleChange}
           />
+
+          {speechSupported && (
+            <button
+              onClick={toggleListening}
+              className={styles["mockInterview-microphoneIcon"]}
+            >
+              {isListening ? '🔴' : '🎙️'}
+            </button>
+          )}
 
           <button
             className={styles["mockInterview-submitButton"]}
