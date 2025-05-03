@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Interview Coach - Web App Documentation
 
-## Getting Started
+## 📥 Initial Setup
 
-First, run the development server:
+### Cloning the Repository
+
+1. Navigate to the Interview Coach repository.
+2. Click the green **"Code"** button and copy the HTTPS link provided.
+3. Open your local terminal.
+4. Execute the command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <copied HTTPS link>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will create a new folder named `interview-coach` on your local device.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Preparing Local Environment
 
-## Learn More
+After cloning the repository, set up your local development environment.
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend (Next.js)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you’re using VSCode:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd interview-coach
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+Otherwise, open the folder manually in your IDE and run the same commands above.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> **Note:**  
+> Run `npm install` every time you pull changes from the repository in case new dependencies have been added.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Repository link:  
+[https://github.com/Dothat65/interview-coach](https://github.com/Dothat65/interview-coach)
+
+---
+
+### Backend (Python + FastAPI)
+
+Change the directory to the folder containing the backend Python script:
+
+```bash
+cd ./app/mockInterview/
+uvicorn main:app
+```
+
+> **Important:**  
+> You must create a `.env` file in the backend folder with your API key:
+
+```
+OPENAI_API_KEY=<your-api-key>
+```
+
+---
+
+## 🌿 Branches
+
+Before you begin coding, make sure you are on your own branch so that your work saves properly and can be pushed for others to review.
+
+To create your branch:
+
+```bash
+git checkout -b yourname
+```
+
+To check which branch you are on:
+
+```bash
+git branch
+```
+
+> **Tip:**  
+> Commit and push as often as possible to your branch.
+
+---
+
+## 🚀 Workflow
+
+After completing your work:
+
+- Push your work to your branch.
+- Create a **Pull Request (PR)** to the `development` branch.
+- Please commit frequently to make reviewing easier.
+- Once reviewed, PRs will be merged into `development`.  
+- **Main** will only be updated occasionally (typically once a week).
+
+> **Important:**  
+> Always pull the latest changes from `development` and merge them into your branch before working each day:
+
+```bash
+git checkout development
+git pull
+git checkout yourname
+git merge development
+```
+
+This prevents merge conflicts down the road.
+
+---
