@@ -10,15 +10,37 @@ export default function MockInterviewSelectionPage() {
     const [numQuestions, setNumQuestions] = useState("3");
 
     const topics = [
-        "Software Engineering",
-        "Data Science",
+        "Artificial Intelligence",
+        "Behavioral",
+        "Blockchain",
+        "Business Analysis",
+        "Cloud Computing",
+        "Creative/Design",
         "Cybersecurity",
+        "Customer Service",
+        "Data Science",
+        "Database Administration",
+        "DevOps",
+        "Education and Training",
+        "Embedded Systems",
         "Finance",
-        "Marketing",
-        "Product Management",
+        "Game Development",
         "Healthcare",
-        "Behavioral"
-    ];
+        "Human Resources",
+        "IT Support",
+        "Legal and Compliance",
+        "Machine Learning",
+        "Marketing",
+        "Mobile App Development",
+        "Network Engineering",
+        "Operations Management",
+        "Product Management",
+        "Project Management",
+        "Sales",
+        "Scientific Research",
+        "Software Engineering",
+        "UI/UX Design"
+    ];    
 
     const handleStartInterview = () => {
         if (!selectedTopic || !numQuestions) return;
