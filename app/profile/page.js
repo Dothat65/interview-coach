@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation'
 import styles from './profile.module.css' // Assuming CSS module exists here
 import Link from 'next/link' // Keep Link for potential future use
 
+import SignOutButton from '@/app/components/signout' // Adjust path if needed
 // No useState or useEffect imports needed for Server Components
 
 // Make the default export function async
@@ -130,11 +131,7 @@ export default async function ProfilePage() {
               Edit Profile
             </button>
             {/* Logout button NEEDS to be a Client Component to function */}
-            <button className={styles.logoutButton} disabled>
-              {/* Add 'disabled' until converted */}
-              <span className={styles.buttonIcon}>🚪</span>
-              Sign Out (Needs Client Component)
-            </button>
+            <SignOutButton />
           </div>
         </div>
 
