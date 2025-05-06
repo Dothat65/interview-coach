@@ -162,11 +162,18 @@ export default async function ProfilePage() {
           <div className={styles.divider}></div>
 
           <div className={styles.profileActions}>
-      
-            <Link href="/profile/history" className={styles.editButton} style={{textDecoration: 'none'}}> {/* Style as button */}
+          <Link href="/home" className={styles.editButton} style={{textDecoration: 'none', backgroundColor: '#e9ecef', color: '#495057' }}>
+                <span className={styles.buttonIcon}>🏠</span>
+                Back to Home
+            </Link>
+            {/* View History Link/Button */}
+            <Link href="/profile/history" className={styles.editButton} style={{textDecoration: 'none'}}>
                 <span className={styles.buttonIcon}>📜</span>
                 View History
             </Link>
+            {/* Back to Home Link/Button */}
+      
+            {/* Sign Out Button Component */}
             <SignOutButton />
           </div>
         </div>
