@@ -47,29 +47,25 @@
 }
 
 .separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
   margin: 26px 0 16px;
   font-size: 14px;
   color: #94a3b8;
   position: relative;
+  width: 108%;
 }
 
 .separator::before,
 .separator::after {
   content: "";
-  position: absolute;
-  top: 50%;
-  width: 40%;
+  flex: 1;
   height: 1px;
   background-color: #e2e8f0;
 }
 
-.separator::before {
-  left: 0;
-}
 
-.separator::after {
-  right: 0;
-}
 
 .input {
   width: 100%;
@@ -131,3 +127,4 @@
   color: #2563eb;
   text-decoration: underline;
 }
+
