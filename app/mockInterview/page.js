@@ -4,39 +4,43 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import styles from "./mockInterview.module.css";
-// --- Import your browser Supabase client ---
-// Ensure this path is correct for your project structure
 import { supabase } from "@/lib/supabaseClient";
 
 export default function MockInterviewPage() {
   const [question, setQuestion] = useState("Question loading...");
   const [response, setResponse] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [loading, setLoading] = useState(false); // Manage loading state for all async operations
+  const [loading, setLoading] = useState(false);
   const [showNext, setShowNext] = useState(false);
   const [currentQuestionNum, setCurrentQuestionNum] = useState(1);
   const [questionsNum, setQuestionsNum] = useState(1);
   const [topic, setTopic] = useState("");
   const [finished, setFinished] = useState(false);
-
-  // --- State variables from 'amaan' branch ---
   const [sessionId, setSessionId] = useState(null);
   const [userId, setUserId] = useState(null);
   const [localHistory, setLocalHistory] = useState([]);
 
-  // Speech recognition states
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
 
   const recognitionRef = useRef(null);
   const router = useRouter();
+  // --- Ref to track if initial setup has run ---
+  const initialSetupDone = useRef(false);
 
-  // --- Consolidated useEffect for all initial setup (from 'amaan' branch) ---
   useEffect(() => {
+    // --- Prevent effect from running setup logic more than once ---
+    if (initialSetupDone.current) {
+      return;
+    }
+
     document.title = "Mock Interview";
+    console.log("Running initial setup useEffect...");
 
     // 1. Generate sessionId for this interview attempt
-    setSessionId(crypto.randomUUID());
+    const newSessionId = crypto.randomUUID();
+    setSessionId(newSessionId);
+    console.log("Session ID generated:", newSessionId);
 
     // 2. Fetch the logged-in user's ID
     const fetchUser = async () => {
@@ -46,10 +50,6 @@ export default function MockInterviewPage() {
         console.log("User ID fetched:", user.id);
       } else {
         console.warn("User not logged in. Mock interview can proceed, but progress will not be saved to DB.");
-        // Optionally, you could redirect to login if saving is mandatory:
-        // alert("You must be logged in to start a mock interview.");
-        // router.push('/login');
-        // return; // Stop further setup if redirecting
       }
     };
     fetchUser();
@@ -67,8 +67,8 @@ export default function MockInterviewPage() {
     if (!storedTopic || !storedQuestions) {
       console.log("Topic or questions count not found in session storage, redirecting to home.");
       alert("Interview setup not found. Please select topic and questions again.");
-      router.push("/"); // Or to a topic selection page
-      return; // Stop further execution
+      router.push("/");
+      return;
     }
 
     setTopic(storedTopic);
@@ -101,8 +101,11 @@ export default function MockInterviewPage() {
     if (storedTopic) {
       fetchInitialQuestion(storedTopic);
     } else {
-        setQuestion("Topic not available to fetch question."); // Should be caught by redirect above
+      setQuestion("Topic not available to fetch question.");
     }
+
+    // --- Mark initial setup as done ---
+    initialSetupDone.current = true;
 
   }, [router]); // router is a dependency for router.push
 
@@ -116,7 +119,7 @@ export default function MockInterviewPage() {
         return;
     }
     setLoading(true);
-    setFeedback(""); // Clear previous feedback
+    setFeedback("");
     try {
       const res = await fetch("http://localhost:8000/get_feedback", {
         method: "POST",
@@ -136,7 +139,7 @@ export default function MockInterviewPage() {
       if (userId && sessionId) {
         console.log("Attempting to save round to DB:", { sessionId, userId, topic, question, response, feedback: data.feedback });
         const { error: insertError } = await supabase
-          .from('interview_rounds') // Corrected table name
+          .from('interview_rounds')
           .insert([{
             session_id: sessionId,
             user_id: userId,
@@ -191,7 +194,6 @@ export default function MockInterviewPage() {
     }
   };
 
-  // toggleListening function from 'amaan' branch
   const toggleListening = () => {
     if (isListening) {
       recognitionRef.current?.stop();
@@ -210,8 +212,8 @@ export default function MockInterviewPage() {
 
     setIsListening(true);
     recognitionRef.current = new SpeechRecognitionAPI();
-    recognitionRef.current.continuous = true; // Keep listening even after pauses
-    recognitionRef.current.interimResults = true; // Get interim results
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
 
     recognitionRef.current.onresult = (event) => {
       let interimTranscript = '';
@@ -224,11 +226,9 @@ export default function MockInterviewPage() {
           interimTranscript += transcript;
         }
       }
-      // Update response with final segments, potentially show interim if desired
       if (finalTranscriptSegment) {
          setResponse((prevResponse) => prevResponse + finalTranscriptSegment + ' ');
       }
-      // You could also set interimTranscript to a temporary state to show it live
     };
 
     recognitionRef.current.onend = () => {
@@ -273,14 +273,13 @@ export default function MockInterviewPage() {
             placeholder="Enter your response..."
             value={response}
             onChange={handleChange}
-            disabled={loading || isListening} // Disable textarea while loading or listening
+            disabled={loading || isListening}
           />
-          {/* Microphone button from 'amaan' branch */}
           {speechSupported && (
             <button
               onClick={toggleListening}
               className={`${styles["mockInterview-microphoneIcon"]} ${isListening ? styles.listening : ''}`}
-              disabled={loading} // Disable mic button while other operations are loading
+              disabled={loading}
               title={isListening ? "Stop Listening" : "Start Listening"}
             >
               {isListening ? '🔴 Stop' : '🎙️ Speak'}
@@ -289,7 +288,7 @@ export default function MockInterviewPage() {
           <button
             className={styles["mockInterview-submitButton"]}
             onClick={showNext ? handleNext : handleSubmit}
-            disabled={loading || (!showNext && response.trim().length === 0) || isListening} // Disable while loading or listening
+            disabled={loading || (!showNext && response.trim().length === 0) || isListening}
           >
             {loading
               ? "Processing..."
@@ -311,7 +310,7 @@ export default function MockInterviewPage() {
         <>
           <h1 className={styles["mockInterview-question"]}>Interview Summary</h1>
           <div className={styles["mockInterview-feedback"]}>
-            {localHistory.map((item, index) => ( // Corrected to use localHistory
+            {localHistory.map((item, index) => (
               <div key={index} style={{ marginBottom: "30px", padding: "15px", border: "1px solid #eee", borderRadius: "8px" }}>
                 <h2>Question {index + 1}</h2>
                 <p><strong>Topic:</strong> {topic}</p>
