@@ -19,7 +19,7 @@ export default function MockInterviewPage() {
   const [topic, setTopic] = useState("");
   const [finished, setFinished] = useState(false);
 
-  // --- State variables for session, user ID, and local history for current session summary ---
+  // --- State variables from 'amaan' branch ---
   const [sessionId, setSessionId] = useState(null);
   const [userId, setUserId] = useState(null);
   const [localHistory, setLocalHistory] = useState([]);
@@ -31,7 +31,7 @@ export default function MockInterviewPage() {
   const recognitionRef = useRef(null);
   const router = useRouter();
 
-  // --- Consolidated useEffect for all initial setup ---
+  // --- Consolidated useEffect for all initial setup (from 'amaan' branch) ---
   useEffect(() => {
     document.title = "Mock Interview";
 
@@ -191,6 +191,7 @@ export default function MockInterviewPage() {
     }
   };
 
+  // toggleListening function from 'amaan' branch
   const toggleListening = () => {
     if (isListening) {
       recognitionRef.current?.stop();
@@ -274,6 +275,7 @@ export default function MockInterviewPage() {
             onChange={handleChange}
             disabled={loading || isListening} // Disable textarea while loading or listening
           />
+          {/* Microphone button from 'amaan' branch */}
           {speechSupported && (
             <button
               onClick={toggleListening}
