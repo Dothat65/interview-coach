@@ -1,5 +1,4 @@
 // app/home/page.js
-
 // Import the server-side Supabase client helper
 import { createClient } from '@/lib/utils/supabase/server'
 // We might still need Link for the conditional part, let's keep it for now
