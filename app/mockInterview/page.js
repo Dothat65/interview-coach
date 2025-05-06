@@ -53,7 +53,7 @@ export default function MockInterviewPage() {
   }
 
   const handleNext = async () => {
-    if (currentQuestionNum === questionsNum) {
+    if (currentQuestionNum >= questionsNum) {
       setFinished(true);
       return;
     }
