@@ -98,7 +98,7 @@
 }
 
 .heroTitle {
-  font-size: 3.2rem; /* Slightly larger */
+  font-size: 4.2rem; /* Slightly larger */
   font-weight: 800; /* Bolder */
   margin-bottom: 20px;
   line-height: 1.25;
@@ -107,7 +107,7 @@
 }
 
 .heroSubtitle {
-  font-size: 1.2rem;
+  font-size: 28px;
   margin-bottom: 35px;
   line-height: 1.7;
   max-width: 650px;
