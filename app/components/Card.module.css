@@ -1,39 +1,53 @@
-.cardContainer {
-  display: flex; /* Use Flexbox for horizontal alignment */
-  flex-wrap: wrap; /* Allow wrapping for smaller screens */
-  gap: 30px; /* Increase spacing between cards */
-  justify-content: center; /* Center the cards horizontally */
-  padding: 20px; /* Add padding around the container */
-}
-
+/* components/Card.module.css */
 .card {
-  flex: 1 1 calc(33.333% - 30px); /* 3 cards per row, adjust width */
-  max-width: 400px; /* Increase max width for larger cards */
-  box-sizing: border-box; /* Include padding and border in width */
-  background: white; /* Card background color */
-  border: 1px solid #ddd; /* Add a border */
-  border-radius: 12px; /* Round the corners */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover effects */
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 25px 30px; /* Adjusted padding */
+  text-align: left;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08); /* Slightly more pronounced shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Ensure card takes full width of link container */
+  text-decoration: none; /* In case it's directly an <a> tag, though not recommended here */
+  color: inherit;
+  border: 1px solid #eef2f7; /* Light border */
 }
 
 .card:hover {
-  transform: translateY(-8px); /* Lift the card on hover */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-6px); /* More lift on hover */
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
+.cardIconWrapper {
+  margin-bottom: 18px; /* Space below icon */
+  display: flex;
+  justify-content: flex-start; /* Align icon to the start */
+  /* The icon color is set via className in HomePage (styles.cardIcon) */
+}
+
+/* Example style for icons passed from HomePage if you apply styles.cardIcon to the lucide icon */
+/* .cardIcon {
+  color: #0070f3;
+} */
+
 .cardContent {
-  padding: 24px; /* Increase padding inside the card */
-  text-align: left; /* Align text to the left */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allows content to fill space if card heights vary */
 }
 
 .cardTitle {
-  font-size: 1.8rem; /* Increase font size for the title */
-  margin-bottom: 12px; /* Add more space below the title */
-  color: #0070f3; /* Primary color for the title */
+  font-size: 1.25rem; /* Slightly larger title */
+  font-weight: 600;
+  color: #2d3748; /* Darker title color */
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .cardDescription {
-  font-size: 1.2rem; /* Increase font size for the description */
-  color: #555; /* Subtle text color */
+  font-size: 0.9rem;
+  color: #4a5568; /* Softer description color */
+  line-height: 1.6;
+  flex-grow: 1; /* Allows description to take space */
 }

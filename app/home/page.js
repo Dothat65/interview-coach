@@ -1,102 +1,110 @@
 // app/home/page.js
-// Import the server-side Supabase client helper
 import { createClient } from '@/lib/utils/supabase/server'
-// We might still need Link for the conditional part, let's keep it for now
-import Link from 'next/link'
-// --- Reintroducing UI Imports ---
-import Card from '../components/Card' // Assuming Card component exists here
-import styles from './home.module.css' // Assuming CSS module exists here
-import { User, LogIn } from 'lucide-react' // Assuming lucide-react is installed
+import Link from 'next/link'; 
+import Image from 'next/image';
+import Card from '../components/Card'; // Assuming Card component exists here
+import styles from './home.module.css';
+import { User, LogIn, ArrowRight, Briefcase, BarChart3, BookOpen as BookIcon } from 'lucide-react';
 
-// Make the default export function async so we can use 'await' inside
 export default async function HomePage() {
-  // 1. Create the server-side Supabase client using our helper
-  const supabase = createClient()
-
-  // 2. Attempt to get the current user's session data
-  let user = null; // Initialize user as null
+  const supabase = createClient();
+  let user = null;
   try {
-      const { data } = await supabase.auth.getUser();
-      user = data?.user; // Assign user if found
+    const { data } = await supabase.auth.getUser();
+    user = data?.user;
   } catch (error) {
-      console.error("Error fetching user:", error);
-      // Handle error appropriately, maybe render an error message
-      // For now, we'll proceed with user as null
+    console.error("Error fetching user:", error);
   }
 
-
-  // 3. Log the user status (optional)
   if (user) {
-    console.log('HomePage (Full UI): User session found.')
+    console.log('HomePage: User session found.');
   } else {
-    console.log('HomePage (Full UI): No user session found.')
+    console.log('HomePage: No user session found.');
   }
 
-  // 4. Render UI content - Reintroducing all sections
   return (
-    // Use a main div or fragment if needed
-    <div>
-      {/* --- Conditional Header Icon/Link --- */}
-      <div className={styles.profileIcon}>
-        {user ? (
-          // If user exists, show Profile icon linking to /profile
-          <Link href="/profile" title="Go to Profile">
-            <User size={60} />
-          </Link>
-        ) : (
-          // If no user, show Login icon linking to /login
-          <Link href="/signup" title="Login / Signup">
-            {/* Using LogIn icon, adjust size/style as needed */}
-            <LogIn size={60} />
-            {/* Or you could use text: */}
-            {/* <span className={styles.loginLink}>Login / Signup</span> */}
-          </Link>
-        )}
-      </div>
+    <div className={styles.pageWrapper}>
+      <nav className={styles.navbar}>
+        <Link href="/" className={styles.navLogoLink}>
+          <Image
+            src="/images/logo.png" // Path relative to the 'public' folder
+            alt="Interview Coach Logo"
+            width={200} // Adjusted width
+            height={47} // Adjusted height (maintaining aspect ratio)
+            priority // Add priority if it's an LCP element
+          />
+        </Link>
+        <div className={styles.navActions}>
+          {user ? (
+            <Link href="/profile" title="Go to Profile" className={styles.navLink}>
+              <User size={40} /> <span>Profile</span>
+            </Link>
+          ) : (
+            <Link href="/signup" title="Login / Signup" className={styles.navLink}>
+              <LogIn size={20} /> <span>Login / Signup</span>
+            </Link>
+          )}
+        </div>
+      </nav>
 
-      {/* --- Reintroducing Title --- */}
-      <div className={styles.home}>
-        <h1 className={styles.title}>Interview Coach</h1>
-      </div>
-
-      {/* --- Reintroducing Hero Section --- */}
-      <div className={styles.hero}>
+      <header className={styles.hero}>
         <div className={styles.heroOverlay}></div>
-      </div>
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>
+            Ace Your Next Interview, Guaranteed.
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Personalized AI coaching, realistic mock interviews, and expert resources designed to land your dream job.
+          </p>
+          <Link href={user ? "/mockInterviewSelection" : "/signup"} className={styles.ctaButton}>
+            {user ? "Start Mock Interview" : "Get Started"}
+            <ArrowRight size={22} style={{ marginLeft: '10px' }} />
+          </Link>
+        </div>
+      </header>
 
-      {/* --- Reintroducing Card Container --- */}
-      <div className={styles.cardContainer}>
-        <Link href="/mockInterviewSelection" className={styles.cardLink}>
-          <Card
-            title="Mock Interviews"
-            description="Practice your interview skills with real-world questions."
-          />
-        </Link>
-        <Link href="/popularquestions" className={styles.cardLink}>
-          <Card
-            title="Popular Interview Questions"
-            description="Explore a curated list of popular interview questions to prepare."
-          />
-        </Link>
-        <Link href="/resources" className={styles.cardLink}>
-          <Card
-            title="Resources"
-            description="Access a library of resources to prepare for interviews."
-          />
-        </Link>
-      </div>
+      <section className={styles.featuresSection}>
+        <h2 className={styles.sectionTitle}>Why Choose Interview Coach?</h2>
+        <div className={styles.cardContainer}>
+          {/* Wrap Card with Link and remove redundant 'link' prop from Card itself */}
+          <Link href={user ? "/mockInterviewSelection" : "/signup"} className={styles.cardLink}>
+            <Card
+              icon={<Briefcase size={32} className={styles.cardIcon} />}
+              title="Realistic Mock Interviews"
+              description="Practice with AI-generated questions tailored to your target roles and get instant feedback."
+            />
+          </Link>
 
-      {/* --- Reintroducing Footer Section --- */}
+          <Link href="/popularquestions" className={styles.cardLink}>
+            <Card
+              icon={<BarChart3 size={32} className={styles.cardIcon} />}
+              title="Popular Questions Library"
+              description="Explore a vast database of common and challenging interview questions across industries."
+            />
+          </Link>
+
+          <Link href="/resources" className={styles.cardLink}>
+            <Card
+              icon={<BookIcon size={32} className={styles.cardIcon} />}
+              title="Curated Learning Resources"
+              description="Access expert articles, guides, and tips to master every aspect of the interview process."
+            />
+          </Link>
+        </div>
+      </section>
+
+      {/* You can add more sections here: Testimonials, How it Works, etc. */}
+
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <p>&copy; 2025 Interview Coach. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Interview Coach. All rights reserved.</p>
           <div className={styles.footerLinks}>
-            <a href="/about">About</a>
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
+            <Link href="/about">About</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms of Service</Link>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

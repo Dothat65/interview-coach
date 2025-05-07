@@ -1,55 +1,148 @@
-.mockInterview-container {
+/* app/mockInterviewSelection/mockInterviewSelection.module.css */
+
+.pageContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 24px;
-    font-family: 'Inter', sans-serif;
-    background-color: #f5f7fa;
-    color: #334155;
-}
-
-.mockInterview-dropdown {
-    width: clamp(200px, 60%, 400px);
-    padding: 12px 16px;
-    margin: 16px 0;
-    border: 1px solid #cbd5e1;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e0eafc 100%); /* Softer gradient */
+    color: #334155; /* Default text color */
+  }
+  
+  .selectionBox {
+    background-color: #ffffff;
+    padding: 35px 45px; /* Increased padding */
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08); /* Softer, more spread shadow */
+    width: 100%;
+    max-width: 550px; /* Slightly wider box */
+    text-align: center;
+    animation: fadeInBox 0.6s ease-out;
+  }
+  
+  @keyframes fadeInBox {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .header {
+    margin-bottom: 30px;
+  }
+  
+  .headerIcon {
+    color: #007bff; /* Primary blue */
+    margin-bottom: 15px;
+  }
+  
+  .title {
+    font-size: 2rem; /* Larger title */
+    font-weight: 700;
+    color: #1e293b; /* Darker slate gray */
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #4b5563; /* Medium gray */
+    line-height: 1.5;
+  }
+  
+  .formGroup {
+    margin-bottom: 25px;
+    text-align: left; /* Align labels to the left */
+  }
+  
+  .label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151; /* Slightly darker label text */
+    margin-bottom: 8px;
+  }
+  
+  .selectWrapper {
+    position: relative; /* For positioning the arrow */
+  }
+  
+  .dropdown {
+    width: 100%;
+    padding: 14px 18px; /* Increased padding */
+    padding-right: 40px; /* Space for the arrow */
+    border: 1px solid #cbd5e1; /* Slate border */
     border-radius: 10px;
-    font-size: 16px;
-    background-color: #f8fafc;
+    font-size: 1rem; /* Standardized font size */
+    background-color: #f8fafc; /* Off-white background */
     color: #1e293b;
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mockInterview-dropdown:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none; /* Remove default system appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+  }
+  
+  .dropdown:focus {
+    border-color: #3b82f6; /* Primary blue on focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Focus ring */
     background-color: #fff;
-}
-
-.mockInterview-submitButton {
-    text-align: center;
-    width: clamp(120px, 20%, 160px);
-    padding: 14px 18px;
-    background-color: #10b981;
+  }
+  
+  .selectArrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280; /* Gray for arrow */
+    pointer-events: none; /* Allow clicks to pass through to select */
+  }
+  
+  .submitButton {
+    display: inline-flex; /* To align icon and text */
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Full width button */
+    padding: 15px 20px; /* Consistent padding */
+    background-color: #007bff; /* Primary blue */
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600; /* Bolder */
     cursor: pointer;
-    margin-top: 14px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mockInterview-submitButton:hover {
-    background-color: #0f9f75;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
-}
-
-.mockInterview-submitButton:disabled {
-    background-color: #63dbb3;
+    margin-top: 20px; /* More space above button */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  }
+  
+  .submitButton:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue */
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  .submitButton:disabled {
+    background-color: #a0cfff; /* Lighter blue when disabled */
     cursor: not-allowed;
-}
+    box-shadow: none;
+    transform: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .selectionBox {
+      padding: 25px 30px;
+    }
+    .title {
+      font-size: 1.8rem;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+    }
+    .dropdown, .submitButton {
+      font-size: 0.95rem;
+    }
+  }
+  

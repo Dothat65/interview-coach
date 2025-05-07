@@ -3,149 +3,148 @@
 // Import the server-side Supabase client helper and redirect function
 import { createClient } from '@/lib/utils/supabase/server' // Adjust path if needed
 import { redirect } from 'next/navigation';
-import Link from 'next/link'; // For a "back to profile" or "home" link
+import Link from 'next/link';
+import styles from './history.module.css'; // Import the new CSS module
+import { ArrowLeft, Home, FileText, MessageSquare, Clock } from 'lucide-react'; // Example icons
 
-// Import basic styles (you can create a CSS module for this page later)
-// For now, we might use some inline styles or very basic global ones if available.
-
-// Make the default export function async
 export default async function InterviewHistoryPage() {
-  // 1. Create the server-side Supabase client
   const supabase = createClient();
-
-  // 2. Get authenticated user data
   const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-  // 3. Redirect if user is not logged in
   if (authError || !user) {
     console.log('InterviewHistoryPage: No user session, redirecting to login.');
-    redirect('/login'); // Adjust path if needed
+    redirect('/login');
   }
   const userId = user.id;
   console.log('InterviewHistoryPage: User session found for user ID:', userId);
 
-  // 4. Fetch all interview rounds for the logged-in user
   let allRounds = [];
   let fetchError = null;
   try {
     const { data, error } = await supabase
-      .from('interview_rounds') // Your table name
-      .select('id, session_id, created_at, topic, question, answer, feedback') // Select necessary columns
+      .from('interview_rounds')
+      .select('id, session_id, created_at, topic, question, answer, feedback')
       .eq('user_id', userId)
-      .order('session_id', { ascending: false }) // Group by session
-      .order('created_at', { ascending: true }); // Order rounds within a session chronologically
+      .order('created_at', { ascending: false }); // Fetch newest rounds first overall
 
-    if (error) {
-      throw error;
-    }
-    allRounds = data || []; // Ensure allRounds is an array
+    if (error) throw error;
+    allRounds = data || [];
     console.log(`Fetched ${allRounds.length} rounds for user ${userId}`);
   } catch (err) {
     console.error('InterviewHistoryPage: Error fetching interview rounds:', err);
     fetchError = err.message;
   }
 
-  // 5. Group rounds by session_id
-  const sessionsMap = new Map(); // Use a Map for easier grouping and ordering
+  const sessionsMap = new Map();
   if (allRounds.length > 0) {
     allRounds.forEach(round => {
       if (!sessionsMap.has(round.session_id)) {
-        // Initialize the session if it's the first time we see this session_id
         sessionsMap.set(round.session_id, {
           sessionId: round.session_id,
-          topic: round.topic, // Assuming topic is consistent per session, take from first round
-          // Use the created_at of the first round in the session as the session's start time
-          // Since we ordered by created_at ascending within session_id, this should be the earliest.
+          topic: round.topic,
+          // This will be refined in the next loop to be the earliest round's created_at
           startedAt: round.created_at,
           rounds: []
         });
       }
-      // Add the current round to this session's list of rounds
       sessionsMap.get(round.session_id).rounds.push(round);
+    });
+
+    // Refine startedAt and sort rounds within each session
+    sessionsMap.forEach(session => {
+      // Sort rounds chronologically (oldest first within a session)
+      session.rounds.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      // The first round (after sorting) is the start of the session
+      if (session.rounds.length > 0) {
+        session.startedAt = session.rounds[0].created_at;
+      }
     });
   }
 
-  // Convert the Map values to an array and sort sessions by startedAt (newest first)
+  // Sort sessions by their determined startedAt date, newest session first
   const groupedSessions = Array.from(sessionsMap.values()).sort((a, b) => new Date(b.startedAt) - new Date(a.startedAt));
   console.log(`Grouped into ${groupedSessions.length} sessions.`);
 
-
-  // 6. Render the page
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '1000px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-        <h1 style={{ fontSize: '2rem', color: '#333' }}>Interview History</h1>
-        <Link href="/profile" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>
-          &larr; Back to Profile
-        </Link>
-      </div>
-
-      {fetchError && (
-        <p style={{ color: 'red', border: '1px solid red', padding: '10px', borderRadius: '5px' }}>
-          Error loading history: {fetchError}
-        </p>
-      )}
-
-      {!fetchError && groupedSessions.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '50px', border: '1px dashed #ccc', borderRadius: '8px' }}>
-          <p style={{ fontSize: '1.2rem', color: '#555' }}>You have no past interview sessions recorded.</p>
-          <Link href="/mockInterviewSelection" style={{ // Assuming this is your selection page
-                display: 'inline-block',
-                marginTop: '20px',
-                padding: '10px 20px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '5px',
-                fontWeight: 'bold'
-            }}>
-             Start a New Mock Interview
-          </Link>
+    <div className={styles.pageContainer}>
+      <header className={styles.header}>
+        <div className={styles.headerNav}>
+            <Link href="/profile" className={styles.backLink}>
+                <ArrowLeft size={18} /> Back to Profile
+            </Link>
+            <Link href="/" className={styles.homeLink}>
+                <Home size={18} /> Go Home
+            </Link>
         </div>
-      )}
+        <h1 className={styles.pageTitle}>Your Interview Journey</h1>
+        <p className={styles.pageSubtitle}>
+          Review your past mock interview sessions, questions, answers, and feedback.
+        </p>
+      </header>
 
-      {!fetchError && groupedSessions.map((session) => (
-        <div key={session.sessionId} style={{
-          marginBottom: '40px',
-          padding: '25px',
-          border: '1px solid #e0e0e0',
-          borderRadius: '12px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
-        }}>
-          <h2 style={{
-            fontSize: '1.5rem',
-            color: '#1a1a1a',
-            borderBottom: '2px solid #007bff',
-            paddingBottom: '10px',
-            marginBottom: '20px'
-          }}>
-            Session: {session.topic || 'General Topic'}
-          </h2>
-          <p style={{ fontSize: '0.9rem', color: '#777', marginBottom: '20px' }}>
-            Started on: {new Date(session.startedAt).toLocaleString()} (Session ID: {session.sessionId.substring(0,8)}...)
+      <main className={styles.mainContent}>
+        {fetchError && (
+          <p className={styles.errorMesssage}>
+            Error loading history: {fetchError}
           </p>
+        )}
 
-          {session.rounds.map((round, index) => (
-            <div key={round.id} style={{
-              marginBottom: '25px',
-              padding: '20px',
-              backgroundColor: '#f9f9f9',
-              borderRadius: '8px',
-              borderLeft: '5px solid #007bff'
-            }}>
-              <h3 style={{ fontSize: '1.2rem', color: '#333', marginBottom: '10px' }}>
-                Question {index + 1}
-              </h3>
-              <p style={{ marginBottom: '8px' }}><strong>Question:</strong> {round.question}</p>
-              <p style={{ marginBottom: '8px', whiteSpace: 'pre-wrap' }}><strong>Your Answer:</strong> {round.answer}</p>
-              <p style={{ whiteSpace: 'pre-wrap' }}><strong>Feedback:</strong> {round.feedback}</p>
-              <p style={{ fontSize: '0.8rem', color: '#aaa', marginTop: '10px', textAlign: 'right' }}>
-                Answered at: {new Date(round.created_at).toLocaleTimeString()}
+        {!fetchError && groupedSessions.length === 0 && (
+          <div className={styles.noHistoryContainer}>
+            <FileText size={64} strokeWidth={1} style={{marginBottom: '20px', color: '#6c757d'}} />
+            <p className={styles.noHistoryText}>You haven't completed any mock interviews yet.</p>
+            <Link href="/mockInterviewSelection" className={styles.ctaButton}>
+             Start Your First Mock Interview
+            </Link>
+          </div>
+        )}
+
+        {!fetchError && groupedSessions.map((session) => (
+          <div key={session.sessionId} className={styles.sessionCard}>
+            <div className={styles.sessionHeader}>
+              <h2 className={styles.sessionTitle}>
+                Session: {session.topic || 'General Topic'}
+              </h2>
+              <p className={styles.sessionDetails}>
+                <Clock size={14} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+                Started on: {new Date(session.startedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                &nbsp;at {new Date(session.startedAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                <span style={{ opacity: 0.7, marginLeft: '10px' }}>(ID: {session.sessionId.substring(0,8)}...)</span>
               </p>
             </div>
-          ))}
-        </div>
-      ))}
+
+            <div className={styles.roundsContainer}>
+              {session.rounds.map((round, index) => (
+                <div key={round.id} className={styles.roundItem}>
+                  <h3 className={styles.roundTitle}>
+                    <MessageSquare size={20} style={{ marginRight: '8px', color: '#007bff', verticalAlign: 'bottom' }} />
+                    Question {index + 1}
+                  </h3>
+                  <div className={styles.roundField}>
+                    <strong>Question:</strong>
+                    <p>{round.question}</p>
+                  </div>
+                  <div className={styles.roundField}>
+                    <strong>Your Answer:</strong>
+                    <p>{round.answer || <em>No answer recorded.</em>}</p>
+                  </div>
+                  <div className={styles.roundField}>
+                    <strong>Feedback:</strong>
+                    <p>{round.feedback || <em>No feedback available.</em>}</p>
+                  </div>
+                  <span className={styles.roundTimestamp}>
+                    Answered: {new Date(round.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </main>
+
+      <footer className={styles.footer}>
+        <p>&copy; {new Date().getFullYear()} Interview Coach. Keep improving!</p>
+      </footer>
     </div>
   );
 }

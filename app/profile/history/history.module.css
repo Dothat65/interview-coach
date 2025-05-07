@@ -1,0 +1,235 @@
+/* app/profile/history/history.module.css */
+
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light overall background */
+    color: #343a40;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    padding: 40px 20px 60px; /* Adjusted padding */
+    text-align: center;
+    position: relative;
+    margin-bottom: -30px; /* To allow content to overlap slightly */
+    z-index: 1;
+  }
+  
+  .headerNav {
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .backLink, .homeLink {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .backLink:hover, .homeLink:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .pageTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0; /* Removed bottom margin as subtitle is separate */
+    animation: fadeInDown 0.8s ease-out;
+  }
+  
+  .pageSubtitle {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 10px auto 0 auto;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease-out 0.2s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .mainContent {
+    flex-grow: 1;
+    padding: 40px 20px;
+    max-width: 1000px; /* Slightly wider for history items */
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .errorMesssage {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .noHistoryContainer {
+    text-align: center;
+    padding: 60px 30px;
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  }
+  
+  .noHistoryText {
+    font-size: 1.25rem;
+    color: #495057;
+    margin-bottom: 25px;
+  }
+  
+  .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .ctaButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .sessionCard {
+    margin-bottom: 40px;
+    background-color: #ffffff;
+    border-radius: 16px; /* More rounded */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08); /* Softer, larger shadow */
+    overflow: hidden; /* To contain child elements with border-radius */
+  }
+  
+  .sessionHeader {
+    padding: 20px 25px;
+    background: linear-gradient(to right, #6f42c1, #4a00e0); /* Purple gradient */
+    color: white;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .sessionTitle {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+  }
+  
+  .sessionDetails {
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+  
+  .roundsContainer {
+    padding: 10px 25px 25px 25px; /* Less top padding as header has padding */
+  }
+  
+  .roundItem {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for each round */
+    border-radius: 10px;
+    border: 1px solid #e9ecef; /* Subtle border */
+    position: relative;
+  }
+  
+  .roundItem:last-child {
+    margin-bottom: 0;
+  }
+  
+  .roundTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0056b3; /* Darker blue for round titles */
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ced4da;
+  }
+  
+  .roundField {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .roundField strong {
+    color: #495057; /* Slightly darker for labels */
+    margin-right: 8px;
+  }
+  
+  .roundField p { /* If feedback/answer are wrapped in p */
+    margin: 0;
+    white-space: pre-wrap; /* Preserve line breaks */
+  }
+  
+  .roundTimestamp {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-top: 15px;
+    text-align: right;
+    display: block;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #343a40;
+    color: #adb5bd;
+    font-size: 0.9rem;
+    margin-top: 40px; /* Ensure space above footer */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header {
+      padding: 30px 15px 50px;
+    }
+    .pageTitle {
+      font-size: 2rem;
+    }
+    .pageSubtitle {
+      font-size: 1rem;
+    }
+    .sessionHeader {
+      padding: 15px 20px;
+    }
+    .sessionTitle {
+      font-size: 1.4rem;
+    }
+    .roundTitle {
+      font-size: 1.1rem;
+    }
+  }
+  
