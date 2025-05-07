@@ -95,8 +95,8 @@ export default function AnswerQuestionPage() {
     setLoading(true);
 
     try {
-      // Send the answer to the backend for feedback
-      const response = await fetch("http://localhost:8000/get_feedback", {
+      // Send the answer to the backend for feedback - Use the new endpoint
+      const response = await fetch("http://localhost:8000/get_structured_feedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

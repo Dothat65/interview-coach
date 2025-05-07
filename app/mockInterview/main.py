@@ -23,7 +23,20 @@ class InterviewSession:
         self.messages.append({"role": "assistant", "content": response.choices[0].message.content})
         return response.choices[0].message.content
     
-    def generate_feedback(self, answer):
+    # Original paragraph-style feedback for mockInterview page
+    def generate_paragraph_feedback(self, answer):
+        self.messages.append({"role": "user", "content": "Provide a thoughtful, paragraph-style evaluation of the user's interview answer to the latest question. Discuss the strengths of the response, such as technical accuracy, clarity, and how well it was structured. Then, address any areas that could be improved, like the depth of explanation, effectiveness of communication, or the problem-solving approach. Ensure the feedback is constructive, balanced, and offers specific, actionable suggestions."})
+        self.messages.append({"role": "user", "content": answer})
+        response = openai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=self.messages,
+            max_tokens=300
+        )
+        self.messages.append({"role": "assistant", "content": response.choices[0].message.content})
+        return response.choices[0].message.content
+    
+    # New structured JSON feedback for answerQuestion page
+    def generate_structured_feedback(self, answer):
         self.messages.append({"role": "user", "content": """
         Provide feedback on the user's interview answer to the latest question. 
         Format your response as a JSON object with the following structure:
@@ -88,7 +101,14 @@ async def get_question(request: TopicRequest):
     question = session.generate_interview_question(request.topic)
     return {"question": question}
 
+# Original endpoint for mockInterview page
 @app.post("/get_feedback")
 async def get_feedback(feedback_request: FeedbackRequest):
-    feedback = session.generate_feedback(feedback_request.response)
+    feedback = session.generate_paragraph_feedback(feedback_request.response)
+    return {"feedback": feedback}
+
+# New endpoint for answerQuestion page
+@app.post("/get_structured_feedback")
+async def get_structured_feedback(feedback_request: FeedbackRequest):
+    feedback = session.generate_structured_feedback(feedback_request.response)
     return {"feedback": feedback}
