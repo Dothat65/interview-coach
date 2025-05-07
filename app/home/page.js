@@ -57,7 +57,7 @@ export default async function HomePage() {
             Personalized AI coaching, realistic mock interviews, and expert resources designed to land your dream job.
           </p>
           <Link href={user ? "/mockInterviewSelection" : "/signup"} className={styles.ctaButton}>
-            {user ? "Start Mock Interview" : "Get Started Free"}
+            {user ? "Start Mock Interview" : "Get Started"}
             <ArrowRight size={22} style={{ marginLeft: '10px' }} />
           </Link>
         </div>
