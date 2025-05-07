@@ -1,3 +1,6 @@
+/* Signup.module.css */
+
+/* --- Base Container & Box Styles --- */
 .container {
   display: flex;
   flex-direction: column;
@@ -5,129 +8,212 @@
   justify-content: center;
   min-height: 100vh;
   padding: 24px;
-  background: linear-gradient(to right, #eef2f7, #f8f9fb);
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #dceefb, #f5f7fa);
-
+  background: linear-gradient(135deg, #e0eafc, #f5f7fa); /* Softer gradient */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; /* Modern font stack */
 }
 
 .box {
   background: #ffffff;
-  padding: 48px;
+  padding: 40px 48px; /* Adjusted padding */
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07); /* Softer, more spread shadow */
   width: 100%;
-  max-width: 420px;
+  max-width: 430px; /* Slightly wider */
   text-align: center;
+  position: relative; /* For potential absolute positioning of elements inside */
 }
 
+/* --- Logo & Separator --- */
 .logo {
-  font-size: 2rem;
+  font-size: 2.2rem; /* Slightly larger */
   font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 28px;
-}
-
-.googleButton {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  padding: 14px 18px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-.googleButton:hover {
-  background-color: #357ae8;
-  box-shadow: 0 4px 14px rgba(66, 133, 244, 0.3);
+  color: #1e293b; /* Dark slate gray */
+  margin-bottom: 30px;
 }
 
 .separator {
-  margin: 26px 0 16px;
-  font-size: 14px;
-  color: #94a3b8;
-  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 28px 0 20px; /* Adjusted margins */
+  font-size: 0.8rem; /* Smaller text */
+  color: #94a3b8; /* Slate gray for separator text */
+  width: 100%;
 }
 
 .separator::before,
 .separator::after {
   content: "";
-  position: absolute;
-  top: 50%;
-  width: 40%;
+  flex: 1;
   height: 1px;
-  background-color: #e2e8f0;
+  background-color: #e2e8f0; /* Lighter separator line */
 }
 
-.separator::before {
-  left: 0;
-}
-
-.separator::after {
-  right: 0;
+/* --- Input Group & Inputs --- */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Small gap between input and indicator */
+  margin-bottom: 20px; /* Space before auth button */
 }
 
 .input {
   width: 100%;
-  padding: 14px 18px;
-  margin: 12px 0;
-  border: 1px solid #cbd5e1;
+  padding: 15px 18px; /* Slightly more padding */
+  margin-bottom: 14px; /* Consistent margin */
+  border: 1px solid #cbd5e1; /* Slate border */
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 1rem; /* Standardized font size */
   color: #1e293b;
-  background-color: #f8fafc;
+  background-color: #f8fafc; /* Off-white background */
   outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
+.input:last-of-type {
+  /* Adjust if password indicator isn't directly after the last input */
+   margin-bottom: 0;
+}
+
+
 .input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6; /* Primary blue */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Focus ring */
   background-color: #fff;
 }
 
 .input::placeholder {
   color: #94a3b8;
-  font-style: italic;
+}
+
+/* --- Password Strength Indicator --- */
+.passwordStrengthIndicator {
+  font-size: 0.8rem;
+  margin-top: -8px; /* Pull it up slightly closer to the password field */
+  margin-bottom: 12px; /* Space before the next element if any, or button */
+  padding: 5px 10px; /* Adjusted padding */
+  border-radius: 6px; /* Slightly more rounded */
+  text-align: left;
+  font-weight: 500;
+  width: 100%; /* Take full width */
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.strengthWeak {
+  color: #c2410c; /* Darker orange/red */
+  background-color: #fff7ed; /* Light orange */
+  border-left: 3px solid #f97316; /* Orange accent */
+}
+
+.strengthMedium {
+  color: #ca8a04; /* Darker yellow/amber */
+  background-color: #fefce8; /* Light yellow */
+  border-left: 3px solid #facc15; /* Yellow accent */
+}
+
+.strengthStrong {
+  color: #15803d; /* Darker green */
+  background-color: #f0fdf4; /* Light green */
+  border-left: 3px solid #22c55e; /* Green accent */
+}
+
+/* --- Buttons --- */
+.authButton,
+.googleButton {
+  width: 100%;
+  padding: 15px 18px; /* Consistent padding */
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem; /* Standardized font size */
+  font-weight: 600; /* Bolder */
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space for icon if added */
 }
 
 .authButton {
-  width: 100%;
-  padding: 14px 18px;
-  background-color: #10b981;
+  background-color: #10b981; /* Emerald green */
   color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 14px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px; /* Space above if password indicator is present */
 }
 
 .authButton:hover {
-  background-color: #0f9f75;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  background-color: #0f9f75; /* Darker emerald */
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+  transform: translateY(-1px);
 }
 
+.googleButton {
+  background-color: #ffffff; /* White background */
+  color: #3b82f6; /* Blue text */
+  border: 1px solid #d1d5db; /* Light border */
+  margin-top: 16px;
+}
+
+.googleButton:hover {
+  background-color: #f9fafb; /* Very light grey */
+  border-color: #9ca3af;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+/* Add Google icon styling if you embed an SVG or use a font icon */
+/* .googleButton svg { margin-right: 8px; } */
+
+
+/* --- Toggle Link --- */
 .toggle {
-  margin-top: 24px;
-  font-size: 14px;
-  color: #64748b;
+  margin-top: 28px; /* More space above */
+  font-size: 0.9rem; /* Slightly larger */
+  color: #4b5563; /* Darker grey */
 }
 
 .link {
-  color: #3b82f6;
+  color: #3b82f6; /* Primary blue */
   cursor: pointer;
   text-decoration: none;
   font-weight: 500;
 }
 
 .link:hover {
-  color: #2563eb;
+  color: #2563eb; /* Darker blue */
   text-decoration: underline;
+}
+
+/* --- Custom Success Message --- */
+.successMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px; /* More padding */
+  background-color: #f0fdf4; /* Light green background */
+  border: 1px solid #76c893; /* Green border */
+  border-radius: 12px;
+  color: #15803d; /* Dark green text */
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  animation: fadeInSuccess 0.5s ease-out;
+}
+
+@keyframes fadeInSuccess {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.successIcon {
+  color: #22c55e; /* Bright green for the icon */
+  margin-bottom: 18px; /* Space between icon and text */
+}
+
+.successMessage p {
+  margin: 0;
+  font-size: 1.15rem; /* Slightly larger */
+  font-weight: 500;
 }
