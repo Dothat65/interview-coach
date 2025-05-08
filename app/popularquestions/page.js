@@ -1,7 +1,12 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import styles from "./popularquestions.module.css"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Add this import
+import Link from "next/link";
+import { Home } from 'lucide-react'; // Import the Home icon
+
+
+import styles from "./popularquestions.module.css";
 
 // Mock data for interview questions by industry
 const industriesData = [
@@ -69,7 +74,8 @@ const industriesData = [
       },
       {
         id: "fin4",
-        question: "What factors affect a company's weighted average cost of capital (WACC)?",
+        question:
+          "What factors affect a company's weighted average cost of capital (WACC)?",
         difficulty: "Hard",
         frequency: "Medium",
       },
@@ -89,31 +95,36 @@ const industriesData = [
     questions: [
       {
         id: "health1",
-        question: "What experience do you have with electronic health records (EHR) systems?",
+        question:
+          "What experience do you have with electronic health records (EHR) systems?",
         difficulty: "Easy",
         frequency: "High",
       },
       {
         id: "health2",
-        question: "How do you ensure patient confidentiality and HIPAA compliance?",
+        question:
+          "How do you ensure patient confidentiality and HIPAA compliance?",
         difficulty: "Medium",
         frequency: "High",
       },
       {
         id: "health3",
-        question: "Describe a situation where you had to deal with a difficult patient.",
+        question:
+          "Describe a situation where you had to deal with a difficult patient.",
         difficulty: "Medium",
         frequency: "High",
       },
       {
         id: "health4",
-        question: "What strategies would you implement to reduce medical errors?",
+        question:
+          "What strategies would you implement to reduce medical errors?",
         difficulty: "Hard",
         frequency: "Medium",
       },
       {
         id: "health5",
-        question: "How do you stay current with medical research and advancements?",
+        question:
+          "How do you stay current with medical research and advancements?",
         difficulty: "Medium",
         frequency: "Medium",
       },
@@ -139,13 +150,15 @@ const industriesData = [
       },
       {
         id: "mkt3",
-        question: "How would you approach building a brand strategy for a new product?",
+        question:
+          "How would you approach building a brand strategy for a new product?",
         difficulty: "Hard",
         frequency: "Medium",
       },
       {
         id: "mkt4",
-        question: "What social media platforms would you recommend for a B2B company and why?",
+        question:
+          "What social media platforms would you recommend for a B2B company and why?",
         difficulty: "Medium",
         frequency: "Medium",
       },
@@ -157,24 +170,28 @@ const industriesData = [
       },
     ],
   },
-]
+];
 
 export default function InterviewQuestionsPage() {
-  const [industries, setIndustries] = useState(industriesData)
-  const [activeIndustry, setActiveIndustry] = useState(industriesData[0].id)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [filteredQuestions, setFilteredQuestions] = useState([])
-  const [difficultyFilter, setDifficultyFilter] = useState("All")
-  
+  const router = useRouter(); 
+  const [industries, setIndustries] = useState(industriesData);
+  const [activeIndustry, setActiveIndustry] = useState(industriesData[0].id);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [difficultyFilter, setDifficultyFilter] = useState("All");
+
   // New speech recognition states
-  const [isListening, setIsListening] = useState(false)
-  const [transcript, setTranscript] = useState("")
-  const [speechSupported, setSpeechSupported] = useState(true)
-  
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [speechSupported, setSpeechSupported] = useState(true);
+
   // Check if speech recognition is supported
   useEffect(() => {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    if (
+      !("webkitSpeechRecognition" in window) &&
+      !("SpeechRecognition" in window)
+    ) {
       setSpeechSupported(false);
     }
   }, []);
@@ -182,31 +199,33 @@ export default function InterviewQuestionsPage() {
   useEffect(() => {
     // Simulate loading delay
     const timer = setTimeout(() => {
-      setLoading(false)
-    }, 500)
+      setLoading(false);
+    }, 500);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    const currentIndustry = industries.find((ind) => ind.id === activeIndustry)
+    const currentIndustry = industries.find((ind) => ind.id === activeIndustry);
 
     if (currentIndustry) {
-      let filtered = [...currentIndustry.questions]
+      let filtered = [...currentIndustry.questions];
 
       // Apply search filter
       if (searchQuery.trim() !== "") {
-        filtered = filtered.filter((q) => q.question.toLowerCase().includes(searchQuery.toLowerCase()))
+        filtered = filtered.filter((q) =>
+          q.question.toLowerCase().includes(searchQuery.toLowerCase())
+        );
       }
 
       // Apply difficulty filter
       if (difficultyFilter !== "All") {
-        filtered = filtered.filter((q) => q.difficulty === difficultyFilter)
+        filtered = filtered.filter((q) => q.difficulty === difficultyFilter);
       }
 
-      setFilteredQuestions(filtered)
+      setFilteredQuestions(filtered);
     }
-  }, [activeIndustry, industries, searchQuery, difficultyFilter])
+  }, [activeIndustry, industries, searchQuery, difficultyFilter]);
 
   // Speech recognition function
   const toggleListening = () => {
@@ -214,59 +233,61 @@ export default function InterviewQuestionsPage() {
       stopListening();
       return;
     }
-    
+
     setIsListening(true);
     setTranscript("");
-    
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    
+
     recognition.continuous = false;
     recognition.interimResults = true;
-    
+
     recognition.onresult = (event) => {
       const current = event.resultIndex;
       const result = event.results[current];
       const text = result[0].transcript;
-      
+
       setTranscript(text);
       if (result.isFinal) {
         setSearchQuery(text);
       }
     };
-    
+
     recognition.onend = () => {
       setIsListening(false);
     };
-    
+
     recognition.onerror = (event) => {
-      console.error('Speech recognition error', event.error);
+      console.error("Speech recognition error", event.error);
       setIsListening(false);
     };
-    
+
     recognition.start();
   };
-  
+
   const stopListening = () => {
     setIsListening(false);
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.stop();
   };
 
   const handleIndustryChange = (industryId) => {
-    setActiveIndustry(industryId)
-    setSearchQuery("")
-    setDifficultyFilter("All")
-  }
+    setActiveIndustry(industryId);
+    setSearchQuery("");
+    setDifficultyFilter("All");
+  };
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value)
-  }
+    setSearchQuery(e.target.value);
+  };
 
   const handleDifficultyChange = (difficulty) => {
-    setDifficultyFilter(difficulty)
-  }
+    setDifficultyFilter(difficulty);
+  };
 
   if (loading) {
     return (
@@ -274,23 +295,31 @@ export default function InterviewQuestionsPage() {
         <div className={styles.loadingSpinner}></div>
         <span>Loading interview questions...</span>
       </div>
-    )
+    );
   }
 
-  const currentIndustry = industries.find((ind) => ind.id === activeIndustry)
+  const currentIndustry = industries.find((ind) => ind.id === activeIndustry);
   const difficultyColors = {
     Easy: "#22c55e",
     Medium: "#f59e0b",
     Hard: "#ef4444",
-  }
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Popular Interview Questions</h1>
         <p className={styles.subtitle}>
-          Prepare for your next interview with these commonly asked questions from top industries
+          Prepare for your next interview with these commonly asked questions
+          from top industries
         </p>
+      </div>
+
+      <div className={styles.homeLinkContainer}>
+        <Link href="/" className={styles.homeLink} title="Back to Home">
+          <Home size={18} />
+          <span>Home</span>
+        </Link>
       </div>
 
       <div className={styles.content}>
@@ -301,7 +330,9 @@ export default function InterviewQuestionsPage() {
             {industries.map((industry) => (
               <button
                 key={industry.id}
-                className={`${styles.industryTab} ${activeIndustry === industry.id ? styles.activeTab : ""}`}
+                className={`${styles.industryTab} ${
+                  activeIndustry === industry.id ? styles.activeTab : ""
+                }`}
                 onClick={() => handleIndustryChange(industry.id)}
                 style={{
                   "--industry-color": industry.color,
@@ -318,10 +349,15 @@ export default function InterviewQuestionsPage() {
         <div className={styles.questionsSection}>
           <div className={styles.questionsHeader}>
             <div className={styles.industryInfo}>
-              <span className={styles.industryIconLarge} style={{ backgroundColor: currentIndustry.color }}>
+              <span
+                className={styles.industryIconLarge}
+                style={{ backgroundColor: currentIndustry.color }}
+              >
                 {currentIndustry.icon}
               </span>
-              <h2 className={styles.industryTitle}>{currentIndustry.name} Interview Questions</h2>
+              <h2 className={styles.industryTitle}>
+                {currentIndustry.name} Interview Questions
+              </h2>
             </div>
 
             <div className={styles.filters}>
@@ -334,38 +370,40 @@ export default function InterviewQuestionsPage() {
                   onChange={handleSearchChange}
                 />
                 <span className={styles.searchIcon}>🔍</span>
-                
+
                 {/* Speech Recognition Button */}
                 {speechSupported && (
-                  <button 
+                  <button
                     onClick={toggleListening}
                     className={styles.micButton}
                     style={{
-                      background: isListening ? '#ef4444' : '#6366f1',
-                      padding: '6px 10px',
-                      borderRadius: '50%',
-                      border: 'none',
-                      marginLeft: '8px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
+                      background: isListening ? "#ef4444" : "#6366f1",
+                      padding: "6px 10px",
+                      borderRadius: "50%",
+                      border: "none",
+                      marginLeft: "8px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    {isListening ? '🛑' : '🎤'}
+                    {isListening ? "🛑" : "🎤"}
                   </button>
                 )}
               </div>
 
               {/* Speech transcript display */}
               {isListening && (
-                <div style={{
-                  padding: '8px 12px',
-                  marginTop: '8px',
-                  background: 'rgba(0,0,0,0.05)',
-                  borderRadius: '8px',
-                  fontSize: '14px'
-                }}>
+                <div
+                  style={{
+                    padding: "8px 12px",
+                    marginTop: "8px",
+                    background: "rgba(0,0,0,0.05)",
+                    borderRadius: "8px",
+                    fontSize: "14px",
+                  }}
+                >
                   <p style={{ margin: 0 }}>
                     <strong>Listening:</strong> {transcript || "Speak now..."}
                   </p>
@@ -378,10 +416,17 @@ export default function InterviewQuestionsPage() {
                   {["All", "Easy", "Medium", "Hard"].map((difficulty) => (
                     <button
                       key={difficulty}
-                      className={`${styles.filterOption} ${difficultyFilter === difficulty ? styles.activeFilter : ""}`}
+                      className={`${styles.filterOption} ${
+                        difficultyFilter === difficulty
+                          ? styles.activeFilter
+                          : ""
+                      }`}
                       onClick={() => handleDifficultyChange(difficulty)}
                       style={{
-                        "--filter-color": difficulty === "All" ? "#6366f1" : difficultyColors[difficulty] || "#6366f1",
+                        "--filter-color":
+                          difficulty === "All"
+                            ? "#6366f1"
+                            : difficultyColors[difficulty] || "#6366f1",
                       }}
                     >
                       {difficulty}
@@ -401,17 +446,40 @@ export default function InterviewQuestionsPage() {
                     <div className={styles.questionMeta}>
                       <span
                         className={styles.difficultyTag}
-                        style={{ backgroundColor: difficultyColors[question.difficulty] }}
+                        style={{
+                          backgroundColor:
+                            difficultyColors[question.difficulty],
+                        }}
                       >
                         {question.difficulty}
                       </span>
                       <span className={styles.frequencyTag}>
-                        {question.frequency === "High" ? "⭐⭐⭐" : question.frequency === "Medium" ? "⭐⭐" : "⭐"}
+                        {question.frequency === "High"
+                          ? "⭐⭐⭐"
+                          : question.frequency === "Medium"
+                          ? "⭐⭐"
+                          : "⭐"}
                       </span>
                     </div>
                   </div>
                   <div className={styles.questionActions}>
-                    <button className={styles.actionButton}>
+                    <button
+                      className={styles.actionButton}
+                      onClick={() => {
+                        const encodedQuestion = encodeURIComponent(
+                          question.question
+                        );
+                        const encodedTopic = encodeURIComponent(
+                          currentIndustry.name
+                        );
+                        const encodedDifficulty = encodeURIComponent(
+                          question.difficulty
+                        );
+                        router.push(
+                          `/answerQuestion?question=${encodedQuestion}&topic=${encodedTopic}&difficulty=${encodedDifficulty}`
+                        );
+                      }}
+                    >
                       <span className={styles.actionIcon}>📝</span>
                       Practice
                     </button>
@@ -426,12 +494,14 @@ export default function InterviewQuestionsPage() {
               <div className={styles.noResults}>
                 <div className={styles.noResultsIcon}>🔍</div>
                 <h3 className={styles.noResultsTitle}>No questions found</h3>
-                <p className={styles.noResultsText}>Try adjusting your search or filters to find more questions</p>
+                <p className={styles.noResultsText}>
+                  Try adjusting your search or filters to find more questions
+                </p>
               </div>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
