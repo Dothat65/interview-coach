@@ -1,0 +1,317 @@
+/* home.module.css */
+
+/* --- Global & Page Wrapper --- */
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff; /* Cleaner white background */
+  color: #333; /* Default dark text color */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; /* Modern font stack */
+}
+
+/* --- Navbar --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky; /* Or fixed, depending on desired behavior */
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navLogo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0070f3; /* Primary brand color */
+  text-decoration: none;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navLink:hover {
+  background-color: #f0f0f0;
+  color: #0070f3;
+}
+
+/* --- Hero Section --- */
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(90vh - 70px); /* Adjust based on navbar height */
+  min-height: 600px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("/images/interview33.jpg"); /* Gradient overlay + image */
+  background-size: cover;
+  background-position: center 70%; /* Adjust vertical position */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.heroOverlay { /* This can be removed if using linear-gradient on .hero directly */
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1; */
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 750px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.heroTitle {
+  font-size: 4.2rem; /* Slightly larger */
+  font-weight: 800; /* Bolder */
+  margin-bottom: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.5px; /* Tighter letter spacing for large titles */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.heroSubtitle {
+  font-size: 28px;
+  margin-bottom: 35px;
+  line-height: 1.7;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.95; /* Slightly more opaque */
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 35px; /* Larger padding */
+  background-color: #0070f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
+}
+
+.ctaButton:hover {
+  background-color: #005bb5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px 0 rgba(0, 118, 255, 0.23);
+}
+
+/* --- Features Section (Cards) --- */
+.featuresSection {
+  padding: 80px 20px; /* More vertical padding */
+  text-align: center;
+  background-color: #f8f9fa; /* Light grey for contrast with hero/footer */
+}
+
+.sectionTitle {
+  font-size: 2.5rem; /* Larger section title */
+  font-weight: 700;
+  color: #212529; /* Darker text */
+  margin-bottom: 50px; /* More space below title */
+  position: relative;
+  display: inline-block; /* For underline positioning */
+}
+
+/* Optional: Underline for section title */
+.sectionTitle::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #0070f3;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* More gap */
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex; /* Important for card to take full link area */
+  flex: 1 1 300px; /* Flex properties for responsive cards */
+  min-width: 280px; /* Minimum card width */
+  max-width: 350px; /* Maximum card width */
+}
+
+/* Assuming your Card component has a root div, style it like this: */
+/* If your Card component is different, you'll need to adjust its internal styles */
+/* or pass classNames to it. For now, this targets the .cardLink's child. */
+.cardLink > div { /* This targets the Card component's root if it's the direct child */
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Ensure card takes full width of link */
+}
+
+.cardLink > div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 16px rgba(0,0,0,0.1);
+}
+
+.cardIcon { /* Style for icons if passed into Card component */
+  color: #0070f3;
+  margin-bottom: 15px;
+}
+
+/* --- Footer --- */
+.footer {
+  background-color: #212529; /* Darker footer */
+  color: #ced4da; /* Lighter text */
+  padding: 50px 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer p {
+  font-size: 0.9rem;
+  color: #adb5bd;
+  margin-bottom: 20px;
+}
+
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.footerLinks a {
+  font-size: 0.9rem;
+  color: #f8f9fa; /* Lighter link color */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: #0070f3; /* Brand color on hover */
+  text-decoration: none;
+}
+
+/* --- Original .title (if you still need it elsewhere) --- */
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #0070f3;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+  .heroTitle {
+    font-size: 2.8rem;
+  }
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navActions {
+    margin-top: 10px;
+  }
+  .hero {
+    height: auto; /* Allow hero to shrink */
+    min-height: 450px;
+    padding-top: 80px; /* Space for potentially fixed nav */
+    padding-bottom: 40px;
+  }
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  .ctaButton {
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  .cardContainer {
+    gap: 20px;
+  }
+  .cardLink {
+    flex-basis: 100%; /* Stack cards */
+    max-width: 100%;
+  }
+  .footer {
+    padding: 30px 15px;
+  }
+}
